@@ -5,9 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using kennisbank.Models;
+using Kennisbank.Models;
 
-namespace kennisbank.Controllers
+namespace Kennisbank.Controllers
 {
     public class HomeController : Controller
     {
@@ -19,11 +19,6 @@ namespace kennisbank.Controllers
         }
 
         public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Privacy()
         {
             return View();
         }
