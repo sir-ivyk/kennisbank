@@ -16,5 +16,10 @@ namespace Kennisbank.Models
         [DataType(DataType.Date)]
         public DateTime AddedOn { get; set; }
         public string AddedBy { get; set; }
+
+        public Document()
+        {
+            AddedOn = DateTime.Now;
+        }
     }
 }
