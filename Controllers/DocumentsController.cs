@@ -20,9 +20,32 @@ namespace Kennisbank.Controllers
         }
 
         // GET: Documents
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string documentTag, string searchString)
         {
-            return View(await _context.Document.ToListAsync());
+            var tagQuery = from d in _context.Document
+                           orderby d.Tag
+                           select d.Tag;
+
+            var documents = from d in _context.Document
+                            select d;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                documents = documents.Where(s => s.Name.Contains(searchString));
+            }
+
+            if (!String.IsNullOrEmpty(documentTag))
+            {
+                documents = documents.Where(x => x.Tag == documentTag);
+            }
+
+            var documentTagVM = new DocumentTagViewModel
+            {
+                Tags = new SelectList(await tagQuery.Distinct().ToListAsync()),
+                Documents = await documents.ToListAsync()
+            };
+
+            return View(documentTagVM);
         }
 
         // GET: Documents/Details/5
