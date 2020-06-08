@@ -1,2 +1,2 @@
-# kennisbank
-kennisbank afstudeerproject voor cimsolutions 
+# Kennisbank
+Kennisbank afstudeerproject voor cimsolutions 

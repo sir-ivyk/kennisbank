@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
+    <RootNamespace>Kennisbank</RootNamespace>
+    <AssemblyName>Kennisbank</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

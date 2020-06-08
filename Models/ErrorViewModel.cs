@@ -1,6 +1,6 @@
 using System;
 
-namespace kennisbank.Models
+namespace Kennisbank.Models
 {
     public class ErrorViewModel
     {
