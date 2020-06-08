@@ -20,9 +20,17 @@ namespace Kennisbank.Controllers
         }
 
         // GET: Documents
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            return View(await _context.Document.ToListAsync());
+            var documents = from d in _context.Document
+                           select d;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                documents = documents.Where(s => s.Name.Contains(searchString));
+            }
+
+            return View(await documents.ToListAsync());
         }
 
         // GET: Documents/Details/5
