@@ -11,8 +11,11 @@ namespace Kennisbank.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Tag { get; set; }
+
+        [Display(Name = "File Size")]
         public long FileSize { get; set; }
 
+        [Display(Name = "Added On")]
         [DataType(DataType.Date)]
         public DateTime AddedOn { get; set; }
 
