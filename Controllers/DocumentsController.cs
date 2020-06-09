@@ -95,6 +95,7 @@ namespace Kennisbank.Controllers
                     filePath = Path.Combine(filePath, fileName);
                     document.Name = fileName;
                     document.FileSize = fileSize;
+                    document.AddedBy = "mike"; // temporary placeholder until actual login is added.
 
                     using var stream = new FileStream(filePath, FileMode.Create);
                     await file.CopyToAsync(stream);
