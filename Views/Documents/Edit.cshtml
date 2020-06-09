@@ -13,7 +13,7 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
-            <div class="form-group">
+            <div class="form-group d-none">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
@@ -23,12 +23,12 @@
                 <input asp-for="Tag" class="form-control" />
                 <span asp-validation-for="Tag" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group d-none">
                 <label asp-for="AddedBy" class="control-label"></label>
                 <input asp-for="AddedBy" class="form-control" />
                 <span asp-validation-for="AddedBy" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group d-none">
                 <label asp-for="FileSize" class="control-label"></label>
                 <input asp-for="FileSize" class="form-control" />
                 <span asp-validation-for="FileSize" class="text-danger"></span>
