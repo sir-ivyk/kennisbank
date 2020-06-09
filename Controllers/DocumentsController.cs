@@ -7,16 +7,19 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Kennisbank.Data;
 using Kennisbank.Models;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Kennisbank.Controllers
 {
     public class DocumentsController : Controller
     {
         private readonly KennisbankContext _context;
+        private readonly IWebHostEnvironment webHostEnvironment;
 
-        public DocumentsController(KennisbankContext context)
+        public DocumentsController(KennisbankContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            this.webHostEnvironment = webHostEnvironment;
         }
 
         // GET: Documents
@@ -166,6 +169,11 @@ namespace Kennisbank.Controllers
             _context.Document.Remove(document);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult UploadFile()
+        {
+            return View();
         }
 
         private bool DocumentExists(int id)
