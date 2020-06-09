@@ -7,16 +7,21 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Kennisbank.Data;
 using Kennisbank.Models;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace Kennisbank.Controllers
 {
     public class DocumentsController : Controller
     {
         private readonly KennisbankContext _context;
+        private readonly IWebHostEnvironment webHostEnvironment;
 
-        public DocumentsController(KennisbankContext context)
+        public DocumentsController(KennisbankContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            this.webHostEnvironment = webHostEnvironment;
         }
 
         // GET: Documents
@@ -77,10 +82,25 @@ namespace Kennisbank.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,AddedOn,Tag,AddedBy,FileSize")] Document document)
+        public async Task<IActionResult> Create([Bind("Id,Name,AddedOn,Tag,AddedBy,FileSize")] Document document, IFormFile file)
         {
             if (ModelState.IsValid)
             {
+                var fileSize = file.Length;
+
+                if (fileSize > 0)
+                {
+                    var filePath = Path.Combine(webHostEnvironment.WebRootPath, "files");
+                    var fileName = Path.Combine(file.FileName);
+                    filePath = Path.Combine(filePath, fileName);
+                    document.Name = fileName;
+                    document.FileSize = fileSize;
+                    document.AddedBy = "mike"; // temporary placeholder until actual login is added.
+
+                    using var stream = new FileStream(filePath, FileMode.Create);
+                    await file.CopyToAsync(stream);
+                }
+
                 _context.Add(document);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
