@@ -82,10 +82,24 @@ namespace Kennisbank.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,AddedOn,Tag,AddedBy,FileSize")] Document document)
+        public async Task<IActionResult> Create([Bind("Id,Name,AddedOn,Tag,AddedBy,FileSize")] Document document, IFormFile file)
         {
             if (ModelState.IsValid)
             {
+                var fileSize = file.Length;
+
+                if (fileSize > 0)
+                {
+                    var filePath = Path.Combine(webHostEnvironment.WebRootPath, "files");
+                    var fileName = Path.Combine(file.FileName);
+                    filePath = Path.Combine(filePath, fileName);
+                    document.Name = fileName;
+                    document.FileSize = fileSize;
+
+                    using var stream = new FileStream(filePath, FileMode.Create);
+                    await file.CopyToAsync(stream);
+                }
+
                 _context.Add(document);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
