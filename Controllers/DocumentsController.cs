@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Kennisbank.Data;
 using Kennisbank.Models;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace Kennisbank.Controllers
 {
@@ -169,11 +171,6 @@ namespace Kennisbank.Controllers
             _context.Document.Remove(document);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }
-
-        public IActionResult UploadFile()
-        {
-            return View();
         }
 
         private bool DocumentExists(int id)
