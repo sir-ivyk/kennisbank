@@ -1,16 +1,17 @@
 ﻿@{
     ViewData["Title"] = "Upload a File";
 }
+<h1>Upload</h1>
 
-<h1>Upload a File</h1>
-
+<h4>Documents</h4>
+<hr />
 <div class="row">
     <div class="col-md-10">
-        <form methods="post" enctype="multipart/form-data" asp.controller="Documents" asp-action="UploadFile">
+        <form method="post" enctype="multipart/form-data" asp-controller="Upload" asp-action="Index">
             <div class="form-group">
                 <div class="col-md-10">
-                    <p>Upload a file using this form:</p>
-                    <input type="file" name="files" />
+                    <p>Upload one or more files using this form:</p>
+                    <input type="file" name="files" multiple />
                 </div>
             </div>
             <div class="form-group">
@@ -23,5 +24,5 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-controller="Documents" asp-action="Index">Back to List</a>
 </div>
