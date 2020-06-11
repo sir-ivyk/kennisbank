@@ -25,7 +25,7 @@ namespace Kennisbank.Controllers
         }
 
         // GET: Documents
-        public async Task<IActionResult> Index(string documentTag, string searchString)
+        public async Task<IActionResult> Index(string documentTag, string searchString, string filter)
         {
             var tagQuery = from d in _context.Document
                            orderby d.Tag
@@ -36,7 +36,14 @@ namespace Kennisbank.Controllers
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                documents = documents.Where(s => s.Name.Contains(searchString));
+                if (filter == "addedby")
+                {
+                    documents = documents.Where(s => s.AddedBy.Contains(searchString));
+                }
+                else if (filter == "document")
+                {
+                    documents = documents.Where(s => s.Name.Contains(searchString));
+                }
             }
 
             if (!String.IsNullOrEmpty(documentTag))
