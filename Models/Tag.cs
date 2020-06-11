@@ -15,7 +15,7 @@ namespace Kennisbank.Models
         [DataType(DataType.Date)]
         public DateTime AddedOn { get; set; }
 
-        [Display(Name = "Owner")]
+        [Display(Name = "Added By")]
         public string AddedBy { get; set; }
 
         public Tag()
