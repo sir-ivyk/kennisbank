@@ -20,9 +20,17 @@ namespace Kennisbank.Controllers
         }
 
         // GET: Tags
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            return View(await _context.Tag.ToListAsync());
+            var tags = from t in _context.Tag
+                       select t;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                tags = tags.Where(s => s.Name.Contains(searchString));
+            }
+
+            return View(await tags.ToListAsync());
         }
 
         // GET: Tags/Details/5
