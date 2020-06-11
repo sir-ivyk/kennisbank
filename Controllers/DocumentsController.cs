@@ -72,9 +72,18 @@ namespace Kennisbank.Controllers
         }
 
         // GET: Documents/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View();
+            var tags = from t in _context.Tag
+                           orderby t.Name
+                           select t.Name;
+
+            var documentVM = new DocumentViewModel
+            {
+                Tags = new SelectList(await tags.Distinct().ToListAsync())
+            };
+
+            return View(documentVM);
         }
 
         // POST: Documents/Create
@@ -82,8 +91,10 @@ namespace Kennisbank.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,AddedOn,Tag,AddedBy,FileSize")] Document document, IFormFile file)
+        public async Task<IActionResult> Create(DocumentViewModel documentVM, IFormFile file)
         {
+            var document = new Document { };
+
             if (ModelState.IsValid)
             {
                 var fileSize = file.Length;
@@ -93,12 +104,17 @@ namespace Kennisbank.Controllers
                     var filePath = Path.Combine(webHostEnvironment.WebRootPath, "files");
                     var fileName = Path.Combine(file.FileName);
                     filePath = Path.Combine(filePath, fileName);
-                    document.Name = fileName;
-                    document.FileSize = fileSize;
-                    document.AddedBy = "mike"; // temporary placeholder until actual login is added.
 
                     using var stream = new FileStream(filePath, FileMode.Create);
                     await file.CopyToAsync(stream);
+
+                    document = new Document
+                    {
+                        Name = fileName,
+                        FileSize = fileSize,
+                        Tag = documentVM.Tag,
+                        AddedBy = "mike" // temporary placeholder until actual login is added.
+                    };
                 }
 
                 _context.Add(document);
