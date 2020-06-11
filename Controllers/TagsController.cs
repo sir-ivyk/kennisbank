@@ -30,7 +30,12 @@ namespace Kennisbank.Controllers
                 tags = tags.Where(s => s.Name.Contains(searchString));
             }
 
-            return View(await tags.ToListAsync());
+            var tagVM = new TagViewModel
+            {
+                Tags = await tags.ToListAsync()
+            };
+
+            return View(tagVM);
         }
 
         // GET: Tags/Details/5
