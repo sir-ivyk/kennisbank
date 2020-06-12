@@ -12,12 +12,18 @@
 
 <form asp-controller="Documents" asp-action="Index" method="get">
     <p>
+        <select name="filter">
+            <option value="document">File Name</option>
+            <option value="addedby">Owner</option>
+        </select>
+        <input type="text" name="searchString" />
+
         <select asp-for="DocumentTag" asp-items="Model.Tags">
             <option value="">All</option>
         </select>
 
-        Name: <input type="text" name="searchString" />
         <input type="submit" value="Search" />
+
     </p>
 </form>
 

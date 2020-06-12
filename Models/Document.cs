@@ -9,6 +9,8 @@ namespace Kennisbank.Models
     public class Document
     {
         public int Id { get; set; }
+
+        [Display(Name = "File Name")]
         public string Name { get; set; }
         public string Tag { get; set; }
 
