@@ -154,7 +154,7 @@ namespace Kennisbank.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,AddedOn,Tag,AddedBy,FileSize")] Document document)
+        public async Task<IActionResult> Edit(int id, [Bind("Id, Name, AddedOn, Tag, AddedBy, FileSize")] Document document, IFormFile file)
         {
             if (id != document.Id)
             {
@@ -165,8 +165,24 @@ namespace Kennisbank.Controllers
             {
                 try
                 {
-                    _context.Update(document);
-                    await _context.SaveChangesAsync();
+                    if (file.Length > 0)
+                    {
+                        var folder = Path.Combine(webHostEnvironment.WebRootPath, "files");
+                        var uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
+                        var filePath = Path.Combine(folder, uniqueFileName);
+
+                        using var stream = new FileStream(filePath, FileMode.Create);
+                        await file.CopyToAsync(stream);
+                    
+                        document.Name = file.FileName;
+                        document.FileSize = file.Length;
+                        document.Tag = document.Tag;
+                        document.AddedBy = document.AddedBy;
+                        document.FilePath = uniqueFileName;
+
+                        _context.Update(document);
+                        await _context.SaveChangesAsync();
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
