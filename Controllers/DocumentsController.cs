@@ -215,20 +215,18 @@ namespace Kennisbank.Controllers
 
         public async Task<IActionResult> Download(string filename)
         {
-            if (filename == null)
-                return Content("filename not present");
-
-            var path = Path.Combine(
-                           Directory.GetCurrentDirectory(),
-                           "wwwroot/files", filename);
-
-            var memory = new MemoryStream();
-            using (var stream = new FileStream(path, FileMode.Open))
+            if (filename != null)
             {
+                var filepath = Path.Combine(webHostEnvironment.WebRootPath, "files", filename);
+                var memory = new MemoryStream();
+
+                using var stream = new FileStream(filepath, FileMode.Open);
                 await stream.CopyToAsync(memory);
+
+                return File(memory, GetContentType(filepath), Path.GetFileName(filepath).Remove(0, 37));
             }
-            memory.Position = 0;
-            return File(memory, GetContentType(path), Path.GetFileName(path));
+
+            return Content("filename not present");
         }
 
         private string GetContentType(string path)
