@@ -4,14 +4,16 @@ using Kennisbank.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Kennisbank.Migrations
 {
     [DbContext(typeof(KennisbankContext))]
-    partial class KennisbankContextModelSnapshot : ModelSnapshot
+    [Migration("20200612174632_AddedPropertyFilePathToDocument")]
+    partial class AddedPropertyFilePathToDocument
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

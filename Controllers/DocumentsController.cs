@@ -10,6 +10,7 @@ using Kennisbank.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using System.Net;
 
 namespace Kennisbank.Controllers
 {
@@ -108,19 +109,20 @@ namespace Kennisbank.Controllers
 
                 if (fileSize > 0)
                 {
-                    var filePath = Path.Combine(webHostEnvironment.WebRootPath, "files");
-                    var fileName = Path.Combine(file.FileName);
-                    filePath = Path.Combine(filePath, fileName);
+                    var folder = Path.Combine(webHostEnvironment.WebRootPath, "files");
+                    var uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
+                    var filePath = Path.Combine(folder, uniqueFileName);
 
                     using var stream = new FileStream(filePath, FileMode.Create);
                     await file.CopyToAsync(stream);
 
                     document = new Document
                     {
-                        Name = fileName,
-                        FileSize = fileSize,
+                        Name = file.FileName,
+                        FileSize = file.Length,
                         Tag = documentVM.Tag,
-                        AddedBy = "mike" // temporary placeholder until actual login is added.
+                        AddedBy = "mike", // temporary placeholder until actual login is added.
+                        FilePath = uniqueFileName
                     };
                 }
 
@@ -209,6 +211,49 @@ namespace Kennisbank.Controllers
             _context.Document.Remove(document);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Download(string filename)
+        {
+            if (filename == null)
+                return Content("filename not present");
+
+            var path = Path.Combine(
+                           Directory.GetCurrentDirectory(),
+                           "wwwroot/files", filename);
+
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(path, FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+            memory.Position = 0;
+            return File(memory, GetContentType(path), Path.GetFileName(path));
+        }
+
+        private string GetContentType(string path)
+        {
+            var types = GetMimeTypes();
+            var ext = Path.GetExtension(path).ToLowerInvariant();
+            return types[ext];
+        }
+
+        private Dictionary<string, string> GetMimeTypes()
+        {
+            return new Dictionary<string, string>
+            {
+                {".txt", "text/plain"},
+                {".pdf", "application/pdf"},
+                {".doc", "application/vnd.ms-word"},
+                {".docx", "application/vnd.ms-word"},
+                {".xls", "application/vnd.ms-excel"},
+                {".xlsx", "application/vnd.openxmlformatsofficedocument.spreadsheetml.sheet"},  
+                {".png", "image/png"},
+                {".jpg", "image/jpeg"},
+                {".jpeg", "image/jpeg"},
+                {".gif", "image/gif"},
+                {".csv", "text/csv"}
+            };
         }
 
         private bool DocumentExists(int id)

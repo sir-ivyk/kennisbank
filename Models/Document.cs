@@ -24,6 +24,8 @@ namespace Kennisbank.Models
         [Display(Name = "Owner")]
         public string AddedBy { get; set; }
 
+        public string FilePath { get; set; }
+
         public Document()
         {
             AddedOn = DateTime.Now;
