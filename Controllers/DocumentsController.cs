@@ -108,19 +108,20 @@ namespace Kennisbank.Controllers
 
                 if (fileSize > 0)
                 {
-                    var filePath = Path.Combine(webHostEnvironment.WebRootPath, "files");
-                    var fileName = Path.Combine(file.FileName);
-                    filePath = Path.Combine(filePath, fileName);
+                    var folder = Path.Combine(webHostEnvironment.WebRootPath, "files");
+                    var uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
+                    var filePath = Path.Combine(folder, uniqueFileName);
 
                     using var stream = new FileStream(filePath, FileMode.Create);
                     await file.CopyToAsync(stream);
 
                     document = new Document
                     {
-                        Name = fileName,
-                        FileSize = fileSize,
+                        Name = file.FileName,
+                        FileSize = file.Length,
                         Tag = documentVM.Tag,
-                        AddedBy = "mike" // temporary placeholder until actual login is added.
+                        AddedBy = "mike", // temporary placeholder until actual login is added.
+                        FilePath = uniqueFileName
                     };
                 }
 
