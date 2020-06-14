@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -25,10 +25,5 @@ namespace Kennisbank.Models
         public string AddedBy { get; set; }
 
         public string FilePath { get; set; }
-
-        public Document()
-        {
-            AddedOn = DateTime.Now;
-        }
     }
 }

@@ -122,6 +122,7 @@ namespace Kennisbank.Controllers
                         FileSize = file.Length,
                         Tag = documentVM.Tag,
                         AddedBy = "mike", // temporary placeholder until actual login is added.
+                        AddedOn = DateTime.Now,
                         FilePath = uniqueFileName
                     };
                 }
@@ -204,6 +205,7 @@ namespace Kennisbank.Controllers
                         document.Name = file.FileName;
                         document.FileSize = file.Length;
                         document.Tag = document.Tag;
+                        document.AddedOn = document.AddedOn;
                         document.AddedBy = document.AddedBy;
                         document.FilePath = uniqueFileName;
 
