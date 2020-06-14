@@ -36,14 +36,7 @@ namespace Kennisbank.Controllers
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                if (filter == "addedby")
-                {
-                    documents = documents.Where(s => s.AddedBy.Contains(searchString));
-                }
-                else if (filter == "document")
-                {
-                    documents = documents.Where(s => s.Name.Contains(searchString));
-                }
+                documents = documents.Where(s => s.AddedBy.Contains(searchString) || s.Name.Contains(searchString));
             }
 
             if (!String.IsNullOrEmpty(documentTag))
