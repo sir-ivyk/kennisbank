@@ -33,14 +33,15 @@
             <th>
                 @Html.DisplayNameFor(model => model.Documents[0].Name)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Documents[0].AddedOn)
-            </th>
+
             <th>
                 @Html.DisplayNameFor(model => model.Documents[0].Tag)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Documents[0].AddedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Documents[0].AddedOn)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Documents[0].FileSize)
@@ -56,13 +57,13 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.AddedOn)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.Tag)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.AddedBy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AddedOn)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.FileSize)
