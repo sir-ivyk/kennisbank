@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -20,6 +20,10 @@ namespace Kennisbank.Models
         [Display(Name = "Added On")]
         [DataType(DataType.Date)]
         public DateTime AddedOn { get; set; }
+
+        [Display(Name = "Last Edited")]
+        [DataType(DataType.Date)]
+        public DateTime LastEdited { get; set; }
 
         [Display(Name = "Owner")]
         public string AddedBy { get; set; }
