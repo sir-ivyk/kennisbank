@@ -10,7 +10,6 @@ using Kennisbank.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.IO;
-using System.Net;
 
 namespace Kennisbank.Controllers
 {
@@ -123,6 +122,7 @@ namespace Kennisbank.Controllers
                         Tag = documentVM.Tag,
                         AddedBy = "mike", // temporary placeholder until actual login is added.
                         AddedOn = DateTime.Now,
+                        LastEdited = DateTime.Now,
                         FilePath = uniqueFileName
                     };
                 }
@@ -160,6 +160,7 @@ namespace Kennisbank.Controllers
                 FileSize = document.FileSize,
                 AddedBy = document.AddedBy,
                 AddedOn = document.AddedOn,
+                LastEdited = document.LastEdited,
                 Tag = document.Tag,
                 Tags = new SelectList(await tags.Distinct().ToListAsync())
             };
@@ -189,6 +190,7 @@ namespace Kennisbank.Controllers
                         document.Name = document.Name;
                         document.Tag = document.Tag;
                         document.AddedBy = document.AddedBy;
+                        document.LastEdited = DateTime.Now;
 
                         _context.Update(document);
                         await _context.SaveChangesAsync();
@@ -206,6 +208,7 @@ namespace Kennisbank.Controllers
                         document.FileSize = file.Length;
                         document.Tag = document.Tag;
                         document.AddedOn = document.AddedOn;
+                        document.LastEdited = DateTime.Now;
                         document.AddedBy = document.AddedBy;
                         document.FilePath = uniqueFileName;
 
