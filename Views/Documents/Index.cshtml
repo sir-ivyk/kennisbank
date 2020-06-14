@@ -41,6 +41,9 @@
                 @Html.DisplayNameFor(model => model.Documents[0].AddedBy)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Documents[0].LastEdited)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Documents[0].AddedOn)
             </th>
             <th>
@@ -61,6 +64,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.AddedBy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastEdited)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.AddedOn)

@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Kennisbank.Models
 {
@@ -21,14 +18,13 @@ namespace Kennisbank.Models
         [DataType(DataType.Date)]
         public DateTime AddedOn { get; set; }
 
+        [Display(Name = "Last Edited")]
+        [DataType(DataType.Date)]
+        public DateTime LastEdited { get; set; }
+
         [Display(Name = "Owner")]
         public string AddedBy { get; set; }
 
         public string FilePath { get; set; }
-
-        public Document()
-        {
-            AddedOn = DateTime.Now;
-        }
     }
 }

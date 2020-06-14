@@ -13,9 +13,12 @@
         <form method="post" enctype="multipart/form-data" asp-controller="Documents" asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="AddedOn" />
+            <input type="hidden" asp-for="AddedBy" />
+            <input type="hidden" asp-for="FileSize" />
             <div class="form-group">
                 <label asp-for="Name" class="control-label">Current File</label>
-                <input asp-for="Name" class="form-control" readonly/>
+                <input asp-for="Name" class="form-control" readonly />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -26,16 +29,6 @@
                 <label asp-for="Tag" class="control-label">Tag - Previous Tag: @Model.Tag</label>
                 <select asp-for="Tag" asp-items="Model.Tags" class="form-control"></select>
                 <span asp-validation-for="Tag" class="text-danger"></span>
-            </div>
-            <div class="form-group d-none">
-                <label asp-for="AddedBy" class="control-label"></label>
-                <input asp-for="AddedBy" class="form-control" />
-                <span asp-validation-for="AddedBy" class="text-danger"></span>
-            </div>
-            <div class="form-group d-none">
-                <label asp-for="FileSize" class="control-label"></label>
-                <input asp-for="FileSize" class="form-control" />
-                <span asp-validation-for="FileSize" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
