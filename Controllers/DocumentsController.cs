@@ -142,11 +142,29 @@ namespace Kennisbank.Controllers
             }
 
             var document = await _context.Document.FindAsync(id);
+            
             if (document == null)
             {
                 return NotFound();
             }
-            return View(document);
+
+            var tags = from t in _context.Tag
+                       orderby t.Name
+                       select t.Name;
+
+            var documentVM = new DocumentViewModel
+            {
+                Id = document.Id,
+                Name = document.Name,
+                FileSize = document.FileSize,
+                AddedBy = document.AddedBy,
+                AddedOn = document.AddedOn,
+                Tag = document.Tag,
+                Tags = new SelectList(await tags.Distinct().ToListAsync())
+            };
+
+            //return View(documentVM);
+            return View(documentVM);
         }
 
         // POST: Documents/Edit/5
@@ -165,7 +183,16 @@ namespace Kennisbank.Controllers
             {
                 try
                 {
-                    if (file.Length > 0)
+                    if (file == null)
+                    {
+                        document.Name = document.Name;
+                        document.Tag = document.Tag;
+                        document.AddedBy = document.AddedBy;
+
+                        _context.Update(document);
+                        await _context.SaveChangesAsync();
+                    }
+                    else if (file.Length > 0)
                     {
                         var folder = Path.Combine(webHostEnvironment.WebRootPath, "files");
                         var uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
