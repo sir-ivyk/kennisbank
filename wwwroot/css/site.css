@@ -73,3 +73,13 @@ body {
 .bg-cim {
     background-color: rgba(108, 164, 57, 0.95);
 }
+
+.text-cim {
+    color: rgba(108, 164, 57, 0.95);
+}
+
+.btn-cim {
+    color: #fff;
+    background-color: rgba(108, 164, 57, 0.95);
+    border-color: rgba(108, 164, 57, 0.95);
+}
