@@ -1,0 +1,80 @@
+﻿@model Kennisbank.Models.DocumentTagViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="text-cim">Index</h1>
+
+<p>
+    <a class="btn btn-cim" role="button" asp-controller="Documents" asp-action="Create">Add a Document</a>
+</p>
+
+<form asp-controller="Documents" asp-action="Index" method="get">
+    <p>
+        Tag:
+        <select asp-for="DocumentTag" asp-items="Model.Tags">
+            <option value="">All</option>
+        </select>
+        Name / Owner: 
+        <input type="text" name="searchString" />
+        <input type="submit" value="Search" />
+    </p>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Documents[0].Name)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Documents[0].Tag)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Documents[0].AddedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Documents[0].LastEdited)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Documents[0].AddedOn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Documents[0].FileSize)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Documents) 
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tag)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AddedBy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastEdited)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AddedOn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FileSize)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

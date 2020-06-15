@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30128.74
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kennisbank", "kennisbank.csproj", "{088FDA52-8E1D-43F0-AEF1-62BDDD41AFFB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kennisbank", "Kennisbank.csproj", "{088FDA52-8E1D-43F0-AEF1-62BDDD41AFFB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
