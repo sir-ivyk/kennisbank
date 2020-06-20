@@ -25,7 +25,7 @@ namespace Kennisbank.Controllers
         }
 
         // GET: Documents
-        public async Task<IActionResult> Index(string documentTag, string searchString, string filter)
+        public async Task<IActionResult> Index(string documentTag, string searchString)
         {
             var tagQuery = from d in _context.Document
                            orderby d.Tag
